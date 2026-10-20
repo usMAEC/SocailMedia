@@ -2,5 +2,5 @@
 MyPython.zip
 __pycache__
 .vscode
-./uploads/*
+uploads/*
 .DS_Store
