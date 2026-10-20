@@ -10,6 +10,13 @@ brew link --overwrite python@3.14
 az --version
 
 
+git init
+git add .
+git commit -m "comment"
+
+git remote add origin https://github.com/usMAEC/SocailMedia.git
+git push -u origin main
+
 
 
 brew update && brew install azure-cli

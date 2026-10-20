@@ -227,7 +227,7 @@ async def schedule():
                                     format="post",
                                     #collaborators=["@collab_account"]
                                 )
-                await post_with_local_file(ppProfileGroupId,filename, pfs)
+                await post_with_local_file(ppProfileGroupId,filename, pfs, client)
 
             #if data.get('facebook') == 'on':
             #formatted_tickers, top_stocks_names, top_gainer, top_loser = format_tickers(["dgdg", "dssddd"])
@@ -244,11 +244,12 @@ async def schedule():
     #return jsonify(response_data)
 
 
-async def post_with_local_file(PROFILE_GROUP_ID, filename, platforms):
+async def post_with_local_file(PROFILE_GROUP_ID, filename, platforms, client = None):
 
+    if client is None:
+        client =  PostProxy(API_KEY, profile_group_id=PROFILE_GROUP_ID)
 
-
-    async with PostProxy(API_KEY, profile_group_id=PROFILE_GROUP_ID) as client:
+    async with client:
         profiles = ( await client.profiles.list()).data
 
         platform_profiles = []
