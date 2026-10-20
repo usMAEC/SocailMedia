@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Messages {% endblock %}</h1>
+    {% for message in messages %}
+        <div class='message'>
+            <h3>{{ message['title'] }}</h3>
+            <p>{{ message['content'] }}</p>
+        </div>
+    {% endfor %}
+    <div>
+        <img  src="{{session['user'].picture}}" />
+        <div><a href='/googlelogin'>Google</a></div>
+        <div><a href='/facebooklogin'>Facebook</a></div>
+        <div><a href='/tweeterlogin'>Tweeter</a></div>
+        <div><a href='/ticktoklogin'>Ticktok</a></div>
+    </div>
+{% endblock %}

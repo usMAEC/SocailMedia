@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Messages {% endblock %}</h1>
+    {% for message in messages %}
+        <div class='message'>
+            <h3>{{ message['title'] }}</h3>
+            <p>{{ message['content'] }}</p>
+        </div>
+    {% endfor %}
+    <div>
+        --
+        {{ session['user']}}
+        --
+        <img  src="{{session['user'].picture}}" />
+        <div><a href='http://localhost:5000/googlelogin'>Google</a></div>
+        <div><a href='http://localhost:5000/schedule?type=google'>Google Scedule</a></div>
+        <div><a href='http://localhost:5000/facebooklogin'>Facebook</a></div>
+        <div><a href='http://localhost:5000/schedule?type=facebook'>Facebook Schedule</a></div>
+        <div><a href='http://localhost:5000/twitterlogin'>twitter</a></div>
+        <div><a href='http://localhost:5000/schedule?type=twitter'>Twitter Schedule</a></div>
+        <div><a href='http://localhost:5000/tiktoklogin'>Tiktok</a></div>
+        <div><a href='http://localhost:5000/schedule?type=tiktok'>Tiktok Schedule</a></div>
+        <br />
+        <div><a href='http://localhost:5000/logout'>Logout</a></div>
+
+        <table>
+            <tr><td><input type="button"> </td></tr>
+            <tr>
+                <td>1</td><td>ddsds</td><td><input type="submit" /></td><
+            </tr>
+        </table>
+    </div>
+{% endblock %}

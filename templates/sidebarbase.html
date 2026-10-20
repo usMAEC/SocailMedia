@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<div> this is title </div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-1">
+      
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        My Profile
+    </nav>
+
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div><a href='http://localhost:5000/ç'>My Channel</a></div>
+        </nav>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          Adount Details
+       </nav>
+      
+
+        <div>
+            <div><a href='/googlelogin'>Google</a></div>
+            <div><a href='http://localhost:5000/facebooklogin'>Facebook</a></div>
+            <div><a href='http://localhost:5000/tweeterlogin'>Tweeter</a></div>
+            <div><a href='http://localhost:5000/ticktoklogin'>Ticktok</a></div>
+            <div><a href='http://localhost:5000/instagramlogin'>Instagram</a></div>
+        </div>
+    </div>
+    <div class="col">
+     
+
+          {% block account %} {% endblock %}
+
+    </div>
+</div>
+
+{% endblock %}

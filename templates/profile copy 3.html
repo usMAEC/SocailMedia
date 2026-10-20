@@ -1,0 +1,601 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<div> this is title </div>
+{% endblock %}
+
+{% block content %}
+
+<body class="p-1 p-lg-5">
+    <div id="calendar" data-sidebar-addons="#sidebarAddons" data-topbar-addons="#topbarAddons">
+    </div>
+
+
+    <div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="d-flex justify-content-end mb-3">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="col-sm-6">
+
+                                <form id="myForm">
+                                    <div>
+                                        <input name="facebook" type="checkbox" class="btn-check" id="btn-check-2-11" checked autocomplete="off">
+                                        <label class="btn btn-primary" for="btn-check-2-11">
+                                            <img style="height: 50px; width:50px;" src="https://static.vecteezy.com/system/resources/thumbnails/042/148/655/small/facebook-logo-facebook-social-media-icon-free-png.png" />
+                                            </label>
+                                   
+                                        <input name="youtube" type="checkbox" class="btn-check" id="btn-check-2-12" checked autocomplete="off">
+                                        <label class="btn btn-primary" for="btn-check-2-12">
+                                            <img style="height: 50px; width:50px;" src="data:image/png;base64,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" />
+                                            </label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input name="title" type="text" class="form-control" id="floatingInputTitle"
+                                            placeholder="appointment title">
+                                        <label for="floatingInputTitle">Title</label>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center flex-nowrap mb-3">
+                                        <div class="form-floating flex-fill">
+                                            <input name="from_date" type="date" class="form-control"
+                                                id="floatingInputDate" placeholder="date">
+                                            <label for="floatingInputDate">From date</label>
+                                        </div>
+                                        <div class="mx-1"></div>
+                                        <div class="form-floating flex-fill">
+                                            <input name="to_date" type="date" class="form-control"
+                                                id="floatingInputToDate" placeholder="date">
+                                            <label for="floatingInputToDate">To date</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" name="allDay" role="switch"
+                                            id="flexSwitchCheckDefaultAllDay">
+                                        <label class="form-check-label" for="flexSwitchCheckDefaultAllDay">all
+                                            day</label>
+                                    </div>
+
+                                    <div class="js-hide-on-all-day">
+                                        <div class="d-flex justify-content-between align-items-center flex-nowrap mb-3">
+                                            <div class="form-floating flex-fill">
+                                                <input name="from_time" type="time" class="form-control"
+                                                    id="floatingInputTime" placeholder="date">
+                                                <label for="floatingInputTime">From time</label>
+                                            </div>
+                                            <div class="mx-1"></div>
+                                            <div class="form-floating flex-fill">
+                                                <input name="to_time" type="time" class="form-control"
+                                                    id="floatingInputToTime" placeholder="date">
+                                                <label for="floatingInputToTime">To time</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" style="height:300px" name="description"
+                                            placeholder="Leave a comment here"
+                                            id="floatingTextareaDescription"></textarea>
+                                        <label for="floatingTextareaDescription">Description</label>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input type="file" class="form-control" id="fileInput"
+                                            placeholder="appointment link" onchange="displayfile(this);">
+                                        <label for="fileInput">File</label>
+                                        <button id="uploadButton" onclick="return upload(this);"
+                                            class="btn btn-secondary">Upload File</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <audio id="audioPreview" controls style="display:none">
+                                    <source src="your_music_file.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                                <video id="videoPreview" width="320" height="240" style="display:none" controls>
+                                    <source src="" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <img id="imagePreview" src="" style="display:none" alt="Description of image"
+                                    width="300" height="300">
+
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center">
+                            <button type="button" name="cls1" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Save</button>
+                            <button type="button" name="cls2" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Post Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/interactive-bs-event-calenda/dist/bs-calendar.js') }}"></script>
+    <!--suppress JSUnresolvedReference -->
+    <script>
+        $(function () {
+
+
+            $.bsCalendar.setDefaults({
+                // title: 'Example',
+                title: '<span class="h4 text-uppercase mb-0">$.fn.bsCalendar</span>',
+                startWeekOnSunday: false,
+                // mainColor: '#e3ec0b',
+                navigateOnWheel: true,
+                // holidays: {
+                //     federalState: 'BE',
+                // },
+                hourSlots: {
+                    start: 0,
+                    end: 24,
+                    height: 60
+                },
+                calendars: [
+                    {
+                        id: 'example-calendar-1',
+                        title: 'Youtube',
+                        color: 'primary',
+                        active: true
+                    },
+                    {
+                        id: 'example-calendar-2',
+                        title: 'Facebook',
+                        color: 'danger',
+                        active: false
+                    },
+                    {
+                        id: 'example-calendar-3',
+                        title: 'Twitter',
+                        color: 'success',
+                        active: true
+                    }
+                ],
+                url: url,
+                debug: true,
+                storeState: true,
+                onAll(eventName, ...args) {
+                    console.log(eventName, ...args);
+                },
+                onHideInfoWindow: function () {
+                    
+                },
+                onAdd: function (data) {
+                    
+                },
+
+
+            });
+
+            const calendarElement = $('#calendar');
+            const modal = $('#exampleModal');
+            let button = modal.find('button[name="cls1"]');
+            button.on("click", {'ref': button, 'postnow' : false, 'calendarElement': calendarElement}, Schedule);
+            button = modal.find('button[name="cls2"]');
+            button.on("click", {'ref': button, 'postnow' : true, 'calendarElement': calendarElement}, Schedule);
+
+            
+            calendarElement.bsCalendar({
+                storeState: true,
+            });
+            // $('#calendar2').bsCalendar();
+            calendarElement
+                .on('change', '#selectUser', function () {
+                    alert(val + '----------');
+                    calendarElement.bsCalendar('refresh', {
+                        view: 'week',
+                        queryParams(p) {
+                            if (val === 'all')
+                                p.userId = null;
+                            else
+                                p.userId = val;
+                            return p;
+                        }
+                    });
+                })
+                .on('add.bs.calendar', function (event, data) {
+                    // console.log(data);
+                    modal.find('input[name="title"]').val('dd');
+                    modal.find('input[name="from_date"]').val(data.start.date);
+                    modal.find('input[name="to_date"]').val(data.end.date);
+                    modal.find('input[name="from_time"]').val(data.start.time);
+                    modal.find('input[name="to_time"]').val(data.end.time);
+                    //modal.find('input[name="allDay"]').prop('checked', false).trigger('change');
+                    modal.find('textarea[name="description"]').val(null);
+                    //modal.find('input[name="color"]').val(null);
+                    //modal.find('input[name="link"]').val(null);
+                    modal.modal('show');
+                })
+                .on('edit.bs.calendar', function (event, appointment, extras) {
+                    event.preventDefault();
+
+                    const isAllDay = appointment.allDay;
+                    const title = appointment.title;
+                    const description = appointment.description;
+                    const color = appointment.color;
+                    const link = appointment.link;
+
+                    const fromTime = isAllDay ? null : extras.start.time.substring(0, 5);
+                    const toTime = isAllDay ? null : extras.end.time.substring(0, 5);
+
+                    modal.find('input[name="title"]').val(title);
+                    modal.find('input[name="from_date"]').val(extras.start.date);   // Datum aus 'YYYY-MM-DD HH:mm:ss'
+                    modal.find('input[name="to_date"]').val(extras.end.date);       // Datum aus 'YYYY-MM-DD HH:mm:ss'
+                    modal.find('input[name="from_time"]').val(fromTime);   // Uhrzeit aus 'YYYY-MM-DD HH:mm:ss'
+                    modal.find('input[name="to_time"]').val(toTime);       // Uhrzeit aus 'YYYY-MM-DD HH:mm:ss'
+                    //modal.find('input[name="allDay"]').prop('checked', isAllDay).trigger('change');
+                    modal.find('textarea[name="description"]').val(description);
+                    //modal.find('input[name="color"]').val(color);
+                    //modal.find('input[name="link"]').val(link);
+                    modal.modal('show');
+                })
+                .on('view.bs.calendar', function (event, view) {
+                    // console.log(view);
+                })
+                .on('click', '[data-method]', function (event) {
+                    debugger
+                    event.preventDefault();
+                    switch ($(this).data('method')) {
+                        case 'destroy':
+                            calendarElement.bsCalendar('destroy');
+                            break;
+                        case 'clear':
+                            calendarElement.bsCalendar('clear');
+                            break;
+                        case 'refresh':
+                            calendarElement.bsCalendar('refresh');
+                            break;
+                        case 'setDate':
+                            calendarElement.bsCalendar('setDate', { date: '1970-01-01', view: 'day' });
+                            break;
+                        case 'setToday':
+                            calendarElement.bsCalendar('setToday', 'week');
+                            break;
+                        case 'updateOptions':
+                            calendarElement.bsCalendar('updateOptions', {
+                                locale: 'fr-FR',
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                })
+                .on('change', '#selectSubdivision', function () {
+                    calendarElement.bsCalendar('updateOptions', {
+                        holidays: {
+                            federalState: selectSubdivision.val(),
+                            country: select.val()
+                        }
+                    });
+                })
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            // Generates up to 500 day-buckets across the given year, summing counts per date
+            function generateDates(year) {
+                // Number of entries to be generated: Randomly between 1 and 365
+                const entriesCount = Math.floor(Math.random() * 365) + 1;
+
+                // Bucket counts per date to avoid duplicates and reflect total per day
+                const buckets = new Map();
+
+                for (let i = 0; i < entriesCount; i++) {
+                    // Random date within the specified year
+                    const randomDate = new Date(
+                        year,                             // specified year
+                        Math.floor(Math.random() * 12),   // month: 0 (Jan) to 11 (Dec)
+                        Math.floor(Math.random() * 28) + 1 // day: 1 to 28 (safe)
+                    );
+
+                    // Format date as 'YYYY-MM-DD'
+                    const key = randomDate.toISOString().split('T')[0];
+
+                    // Increment total for that day (you can tweak increment range if needed)
+                    const prev = buckets.get(key) || 0;
+                    const increment = Math.floor(Math.random() * 7); // 0–6
+                    buckets.set(key, prev + increment);
+                }
+
+                // Convert buckets to array of { date, total }
+                return Array.from(buckets, ([date, total]) => ({ date, total }));
+            }
+
+            async function url(query) {
+                debugger
+
+
+                try {
+                    const response = await fetch("/getSchedule"); // Pauses until the fetch request completes
+                    if (!response.ok) {
+                        throw new Error(`HTTP error: ${response.status}`);
+                    }
+                    var schedules = [];
+                    const data = await response.json(); // Pauses until the response body is parsed as JSON
+                    let k = 0;
+
+                    for (var key in data) {
+                        k++;
+                        var val = JSON.parse(data[key]);
+                        for (var sub_col in val) {
+                            var sub_val = val[sub_col];
+                        }
+                        schedules.push({ 'id': k, title: "Appointment 1", 'start': key, 'end': key, 'title': sub_col, 'description': sub_val });
+                    }
+                    debugger
+                    return schedules;// [{id: 1, title: "Appointment 1", description: "This is a randomly generated appointment descripti…ned to showcase how descriptions enhance context.", start: "2026-03-25 10:35:00", end: "2026-03-25 12:35:00"},
+                    //  { id: 2, title: "Appointment 2", description: "This is a randomly generated appointment descripti…ned to showcase how descriptions enhance context.", start: "2026-03-12 06:50:00", end: "2026-03-12 07:50:00"}]
+                    // The returned value becomes the resolved value of the Promise
+                } catch (error) {
+                    console.error("Could not get data:", error); // Handle network or parsing errors
+                    throw error; // Propagate the error for the caller to handle
+                }
+
+
+
+                // console.log('index url', query);
+                await sleep(Math.floor(Math.random())); // Waits synchronously for 2 seconds
+
+                return new Promise((resolve, reject) => {
+                    try {
+                        // Set default values if fromDate or toDate are not available
+                        const fromDate = query.fromDate ? new Date(`${query.fromDate}T00:00:00`) : null;
+                        const toDate = query.toDate ? new Date(`${query.toDate}T23:59:59`) : null;
+                        const search = query.search;
+                        debugger
+
+                        // If there is only one search term, use the new function
+                        if (search && !fromDate && !toDate) {
+                            const limit = query.limit;
+                            const offset = query.offset;
+                            return resolve(getAppointmentsBySearch(search, limit, offset));
+                        }
+
+                        if (query.view === 'year') {
+                            return resolve(generateDates(query.year));
+                        }
+
+
+
+                        // Filter nach Zeitraum
+                        const filteredAppointments = appointments.filter(appointment => {
+                            const appointmentStart = new Date(appointment.start);
+                            const appointmentEnd = new Date(appointment.end);
+
+                            return (
+                                (!fromDate || appointmentStart >= fromDate) &&
+                                (!toDate || appointmentEnd <= toDate)
+                            );
+                        });
+
+                        // Falls ein Suchbegriff existiert, zusätzlich nach Titel filtern
+                        if (search) {
+                            const searchFilteredAppointments = filteredAppointments.filter(appointment => {
+                                return appointment.title.toLowerCase().includes(search.toLowerCase());
+                            });
+                            return resolve(searchFilteredAppointments);
+                        }
+
+                        // Rückgabe der (zeitlich gefilterten) Termine
+                        resolve(filteredAppointments);
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            }
+
+            function getAppointmentsBySearch(search, limit, offset) {
+                // Wenn kein Suchbegriff angegeben wurde, direkt leeres Array zurückgeben
+                if (!search) {
+                    return { rows: [], total: 0 };
+                }
+
+                const appointments = generateStaticAppointmentsForSearch();
+
+                // Filtere die Termine basierend auf dem Suchbegriff
+                const filteredAppointments = appointments.filter(appointment =>
+                    appointment.title.toLowerCase().includes(search.toLowerCase())
+                );
+
+                // Calculate the total number of hits
+                const total = filteredAppointments.length;
+
+                // Apply limit and offset to limit the results
+                const startIndex = offset || 0; // Default value for offset is 0
+                const endIndex = limit ? startIndex + limit : total;
+
+                // Crop the result according to limit and offset
+                const rows = filteredAppointments.slice(startIndex, endIndex);
+
+                // Return the result as an object
+                return { rows, total };
+            }
+
+
+
+            /* $.ajax({
+             url: "/getSchedule", // The URL to which the request is sent
+                 success: function(result){ // Callback function that handles the response
+                 $("#div1").html(result);
+                 }
+                 });*/
+
+            $('#flexSwitchCheckDefaultAllDay').prop('checked', false)
+                .on('change', function () {
+                    const isAllDay = $(this).prop('checked');
+                    // if (isAllDay) {
+                    $('.js-hide-on-all-day').toggle(!isAllDay);
+                    // }
+
+
+                });
+            $('#flexSwitchCheckTheme').prop('checked', false)
+                .on('change', function () {
+                    const htmlElement = $('html');
+                    const theme = htmlElement.attr('data-bs-theme') === 'light' ? 'dark' : 'light';
+                    htmlElement.attr('data-bs-theme', theme);
+                });
+
+            // Generiere das heutige Datum im Format YYYYMMDD für den ICS-String
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const today = `${y}${m}${d}`;
+
+            const icsString = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Team Meeting
+DTSTART:${today}T090000
+DTEND:${today}T100000
+DESCRIPTION:Discussing the Q4 roadmap and milestones.
+LOCATION:Conference Room B
+URL:https://meet.google.com/abc-defg-hij
+CATEGORIES:Work,Internal
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Lunch with Client
+DTSTART:${today}T123000
+DTEND:${today}T133000
+DESCRIPTION:Discussing new contract terms.
+LOCATION:Italian Restaurant 'Luigi'
+CATEGORIES:Business,Lunch
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Project Review
+DTSTART:${today}T140000
+DTEND:${today}T153000
+DESCRIPTION:Reviewing the latest deployment.
+LOCATION:Office 305
+ORGANIZER:CN=Project Lead:mailto:boss@example.com
+ATTENDEE;CN=John Doe:mailto:john@example.com
+UID:1234567890
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Daily Standup
+DTSTART:${today}T160000
+DTEND:${today}T163000
+DESCRIPTION:Quick sync on daily tasks.
+URL:https://zoom.us/j/987654321
+CATEGORIES:Agile,Daily
+END:VEVENT
+END:VCALENDAR`;
+            const appointments = $.bsCalendar.utils.convertIcsToAppointments(icsString);
+
+            // Dann in den Kalender laden (Beispiel: via refresh oder init)
+            $('#calendarICS').bsCalendar({
+                storeState: true,
+                url: () => Promise.resolve(appointments)
+            });
+        });
+    </script>
+
+    <script>
+        function displayfile(ref) {
+            const file = ref.files[0];
+
+            const imagePreview = document.getElementById('imagePreview');
+            const videoPreview = document.getElementById('videoPreview');
+            const audioPreview = document.getElementById('audioPreview');
+            // Reset previous previews
+            imagePreview.style.display = 'none';
+            imagePreview.setAttribute('src', '#');
+            videoPreview.style.display = 'none';
+            videoPreview.setAttribute('src', '#');
+            audioPreview.style.display = 'none';
+            audioPreview.setAttribute('src', '#');
+
+            if (file) {
+                const fileType = file.type.split('/')[0]; // Get the general file type (image or video)
+                const objectURL = URL.createObjectURL(file); // Create a temporary URL
+
+                if (fileType === 'image') {
+                    imagePreview.setAttribute('src', objectURL);
+                    imagePreview.style.display = 'block';
+                } else if (fileType === 'video') {
+                    videoPreview.setAttribute('src', objectURL);
+                    videoPreview.style.display = 'block';
+                    videoPreview.load(); // Load the video source
+                } else if (fileType === 'audio') {
+                    audioPreview.setAttribute('src', objectURL);
+                    audioPreview.style.display = 'block';
+                    audioPreview.load(); // Load the video source
+                }
+            }
+
+        }
+
+        function upload(ref) {
+            debugger
+            var formData = new FormData();
+            formData.append('file',getFileData(ref))
+            fetch("/upload", {
+                'method': 'POST',
+                'body': formData
+                //  'contentType': false, // Tell jQuery not to set contentType
+                // 'processData': false, // Tell jQuery not to process the data
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                // Handle the response (e.g., parse JSON)
+                //const result = response.json();
+                calendarElement.bsCalendar('refresh');
+                //console.log('Success:', result);
+            });
+            return false;
+        }
+
+        function getFileData(refElement) {
+
+            var files = $(refElement).parent().parent().find('#fileInput');
+
+           return files[0].files[0];
+        }
+
+        function Schedule(params) {
+                debugger
+                const formDataArray = $("#myForm").serializeArray();
+                var formData = new FormData();
+                for (i in formDataArray) {
+     
+                    formData.append(formDataArray[i].name , formDataArray[i].value );
+                }
+                if (params.data.postnow) {
+                    formData.append('postnow',  true);
+                    today = new Date().toISOString().split('T')[0];
+                    formData.set('from_date', today);
+                    formData.set('end_date', today);
+                }
+                formData.append('file', getFileData(params.data.ref));
+                fetch("/schedule", {
+                    'method': 'POST',
+                    'body': formData // The browser sets the Content-Type automatically
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    params.data.calendarElement.bsCalendar('refresh');
+                });
+            }
+    </script>
+
+    {% endblock %}
