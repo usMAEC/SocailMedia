@@ -204,6 +204,7 @@ async def schedule():
                     if facebook_profile is None:
                         raise ValueError("No Facebook profile found")
 
+                    #dropdown for all the pages
                     placements = (await client.profiles.placements(id=facebook_profile.id)).data
 
                     pfs.facebook=FacebookParams(
@@ -227,6 +228,23 @@ async def schedule():
                                     format="post",
                                     #collaborators=["@collab_account"]
                                 )
+                if data.get('pinterest') == 'on':
+
+                    pinterest_profile = next(
+                        (p for p in profiles if p.platform == "pinterest"), None )
+                    if pinterest_profile is None:
+                        raise ValueError("No pinterest board found")
+                    
+                                        #dropdown for all the pages
+                    placements = (await client.profiles.placements(id=pinterest_profile.id)).data
+
+                    
+                    pfs.pinterest=PinterestParams(
+                         format="pin",
+                    title="Pin Title",
+                    board_id=placements[0].id,
+                    destination_link="https://example.com",
+                    )
                 await post_with_local_file(ppProfileGroupId,filename, pfs, client)
 
             #if data.get('facebook') == 'on':
